@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -294,6 +294,88 @@
             flex-shrink: 0;
         }
         
+        /* ИЗМЕНЕННЫЕ СТИЛИ ДЛЯ КОНТЕЙНЕРА ОБРАЗЦОВ - УЛУЧШЕННАЯ ВИЗУАЛИЗАЦИЯ */
+        .obrazcy-row {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 12px;
+          align-items: flex-end;
+          position: relative;
+        }
+        
+        .obrazcy-row > div {
+          flex: 1;
+          min-width: 0;
+        }
+        
+        .obrazcy-row .obrazcy-separator {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 16px;
+          color: #2c3e50;
+          margin-bottom: 6px;
+          height: 44px;
+          align-items: flex-end;
+        }
+        
+        .obrazcy-row .remove-obrazcy-btn {
+          background: #dc3545;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          padding: 0;
+          flex-shrink: 0;
+          margin-bottom: 6px;
+        }
+        
+        .add-obrazcy-btn {
+          background: #f8f9fa;
+          color: #6c757d;
+          border: 2px dashed #dee2e6;
+          border-radius: 10px;
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+          margin-bottom: 6px;
+        }
+        
+        .add-obrazcy-btn:hover {
+          background: #e9ecef;
+          border-color: #4285f4;
+          color: #4285f4;
+        }
+        
+        /* НОВЫЕ СТИЛИ ДЛЯ УЛУЧШЕННОЙ ВИЗУАЛИЗАЦИИ ОБРАЗЦОВ */
+        .obrazcy-input-wrapper label {
+          font-weight: 600;
+          font-size: 12px;
+          color: #7f8c8d;
+          text-transform: uppercase;
+          margin-bottom: 4px;
+        }
+        
+        .obrazcy-input-wrapper input {
+          padding: 10px;
+          font-size: 13px;
+          min-height: 44px;
+        }
+        
         /* Стили для модального окна формы ВИК */
         .vik-modal-overlay {
           position: fixed;
@@ -407,6 +489,30 @@
           }
           .open-vik-btn {
             align-self: stretch;
+          }
+          .obrazcy-row {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .obrazcy-row .obrazcy-separator {
+            display: none;
+          }
+          .obrazcy-row .remove-obrazcy-btn {
+            align-self: center;
+            margin-top: 5px;
+          }
+          .obrazcy-input-wrapper label {
+            font-size: 13px;
+          }
+          .obrazcy-input-wrapper input {
+            font-size: 16px;
+            min-height: 50px;
+          }
+          .add-obrazcy-btn {
+            width: 50px;
+            height: 50px;
+            align-self: center;
+            margin-top: 5px;
           }
         }
         @media (max-width: 480px) { 
@@ -746,6 +852,47 @@
             color: #dc3545;
         }
         
+        /* Стили для чекбоксов пропуска слотов */
+        .vik-container .skip-checkbox {
+            margin-top: 5px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .vik-container .skip-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+        }
+        
+        .vik-container .skip-checkbox label {
+            font-weight: normal;
+            text-transform: none;
+            letter-spacing: normal;
+            color: white;
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .vik-container .time-slot-header.skipped {
+            background-color: #6c757d !important;
+        }
+        
+        .vik-container .skipped-slot-message {
+            color: #6c757d;
+            font-style: italic;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .vik-container .deviation-field {
+            border-color: #ffc107 !important;
+            background-color: #fff3cd !important;
+        }
+        
         @media (min-width: 768px) {
             .vik-container .header-info {
                 grid-template-columns: repeat(3, 1fr);
@@ -915,19 +1062,25 @@
                 <div class="error-message" id="vvodRegranulataError">Поле обязательно для заполнения</div>
             </div>
             
-            <!-- Образцы -->
+            <!-- Образцы с улучшенной визуализацией -->
             <div class="form-group">
                 <label>Образцы</label>
-                <div class="obrazcy-input-container">
-                    <div class="obrazcy-input-wrapper">
-                        <input type="number" id="obrazcyKolichestvo" placeholder="Количество" min="0" required>
-                    </div>
-                    <div class="obrazcy-separator">x</div>
-                    <div class="obrazcy-input-wrapper">
-                        <input type="number" id="obrazcyMetrazh" step="0.01" placeholder="Метраж" min="0" required>
+                <div id="obrazcy-container">
+                    <!-- Первая строка образцов с улучшенным дизайном -->
+                    <div class="obrazcy-row">
+                        <div class="obrazcy-input-wrapper">
+                            <label>Количество</label>
+                            <input type="number" class="obrazcy-kolichestvo" placeholder="Количество" min="0" required>
+                        </div>
+                        <div class="obrazcy-separator">x</div>
+                        <div class="obrazcy-input-wrapper">
+                            <label>Метраж</label>
+                            <input type="number" class="obrazcy-metrazh" step="0.01" placeholder="Метраж" min="0" required>
+                        </div>
+                        <div class="add-obrazcy-btn" id="add-obrazcy-btn">+</div>
                     </div>
                 </div>
-                <div class="error-message" id="obrazcyError">Заполните оба поля образцов</div>
+                <div class="error-message" id="obrazcyError">Заполните все поля образцов</div>
             </div>
             
             <!-- Контейнер для видов, причин и веса отходов -->
@@ -959,6 +1112,12 @@
                     </div>
                 </div>
                 <div class="error-message" id="wasteError">Заполните все поля отходов</div>
+            </div>
+
+            <!-- Общий вес отходов -->
+            <div class="form-group">
+                <label>Общий вес отходов (кг)</label>
+                <input type="number" id="totalWasteWeight" readonly class="readonly" style="background-color: #f8f9fa; font-weight: bold; color: #2c3e50;">
             </div>
             
             <!-- Контейнер для простоя с возможностью добавления -->
@@ -1081,6 +1240,9 @@
                 this.vikCurrentEmployee = null;
                 this.vikCurrentDate = null;
                 
+                // Новое свойство для пропущенных слотов
+                this.skippedSlots = new Set();
+                
                 // Base64 изображения для разных знаков (заполните своими изображениями)
                 this.images = {
                     // Заполните своими изображениями
@@ -1114,6 +1276,7 @@
 
                 document.getElementById('add-downtime-btn').addEventListener('click', () => this.addDowntimeRow());
                 document.getElementById('add-waste-btn-inline').addEventListener('click', () => this.addWasteRow());
+                document.getElementById('add-obrazcy-btn').addEventListener('click', () => this.addObrazcyRow());
                 this.addTimeConversionHandlers();
 
                 document.getElementById('noDowntimeCheckbox').addEventListener('change', (e) => {
@@ -1141,6 +1304,176 @@
                 // Добавлено: Инициализация новых функций валидации
                 this.addProductivityValidation();
                 this.addWasteValidationHandlers();
+            }
+
+            // ============= НОВЫЕ МЕТОДЫ ДЛЯ ОБРАЗЦОВ =============
+
+            /**
+             * Добавление строки образцов
+             */
+            addObrazcyRow() {
+                const obrazcyContainer = document.getElementById('obrazcy-container');
+                const newRow = document.createElement('div');
+                newRow.className = 'obrazcy-row';
+                
+                newRow.innerHTML = `
+                    <div class="obrazcy-input-wrapper">
+                        <label>Количество</label>
+                        <input type="number" class="obrazcy-kolichestvo" placeholder="Количество" min="0" required>
+                    </div>
+                    <div class="obrazcy-separator">x</div>
+                    <div class="obrazcy-input-wrapper">
+                        <label>Метраж</label>
+                        <input type="number" class="obrazcy-metrazh" step="0.01" placeholder="Метраж" min="0" required>
+                    </div>
+                    <button type="button" class="remove-obrazcy-btn">×</button>
+                `;
+                
+                obrazcyContainer.appendChild(newRow);
+                
+                // Добавляем обработчики для новых полей
+                const kolichestvoInput = newRow.querySelector('.obrazcy-kolichestvo');
+                const metrazhInput = newRow.querySelector('.obrazcy-metrazh');
+                
+                kolichestvoInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                kolichestvoInput.addEventListener('input', () => {
+                    kolichestvoInput.classList.remove('validation-error');
+                    const errorElement = document.getElementById('obrazcyError');
+                    if (errorElement) errorElement.style.display = 'none';
+                });
+                
+                metrazhInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                metrazhInput.addEventListener('input', () => {
+                    metrazhInput.classList.remove('validation-error');
+                    const errorElement = document.getElementById('obrazcyError');
+                    if (errorElement) errorElement.style.display = 'none';
+                });
+                
+                // Кнопка удаления строки
+                newRow.querySelector('.remove-obrazcy-btn').addEventListener('click', function() {
+                    obrazcyContainer.removeChild(newRow);
+                });
+            }
+
+            /**
+             * Валидация строки образцов
+             */
+            validateObrazcyRow(row) {
+                const kolichestvoInput = row.querySelector('.obrazcy-kolichestvo');
+                const metrazhInput = row.querySelector('.obrazcy-metrazh');
+                
+                if (!kolichestvoInput || !metrazhInput) return true;
+                
+                const kolichestvoValue = String(kolichestvoInput.value).trim();
+                const metrazhValue = String(metrazhInput.value).trim();
+                
+                if (kolichestvoValue === '' || metrazhValue === '') {
+                    kolichestvoInput.classList.add('validation-error');
+                    metrazhInput.classList.add('validation-error');
+                    return false;
+                } else {
+                    kolichestvoInput.classList.remove('validation-error');
+                    metrazhInput.classList.remove('validation-error');
+                    kolichestvoInput.classList.add('validation-success');
+                    metrazhInput.classList.add('validation-success');
+                    return true;
+                }
+            }
+
+            /**
+             * Валидация всех строк образцов
+             */
+            validateAllObrazcy() {
+                const obrazcyRows = document.querySelectorAll('.obrazcy-row');
+                const errorElement = document.getElementById('obrazcyError');
+                
+                if (obrazcyRows.length === 0) {
+                    if (errorElement) errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                let allValid = true;
+                let hasAtLeastOneFilled = false;
+                
+                obrazcyRows.forEach(row => {
+                    const kolichestvoInput = row.querySelector('.obrazcy-kolichestvo');
+                    const metrazhInput = row.querySelector('.obrazcy-metrazh');
+                    
+                    if (kolichestvoInput && metrazhInput) {
+                        const kolichestvoValue = String(kolichestvoInput.value).trim();
+                        const metrazhValue = String(metrazhInput.value).trim();
+                        
+                        // Если строка частично заполнена - ошибка
+                        if ((kolichestvoValue !== '' && metrazhValue === '') || 
+                            (kolichestvoValue === '' && metrazhValue !== '')) {
+                            kolichestvoInput.classList.add('validation-error');
+                            metrazhInput.classList.add('validation-error');
+                            allValid = false;
+                        }
+                        // Если строка полностью заполнена - валидно
+                        else if (kolichestvoValue !== '' && metrazhValue !== '') {
+                            hasAtLeastOneFilled = true;
+                            kolichestvoInput.classList.remove('validation-error');
+                            metrazhInput.classList.remove('validation-error');
+                        }
+                        // Если строка пустая - игнорируем
+                    }
+                });
+                
+                if (!hasAtLeastOneFilled) {
+                    if (errorElement) {
+                        errorElement.textContent = 'Заполните хотя бы одну строку образцов';
+                        errorElement.style.display = 'block';
+                    }
+                    allValid = false;
+                } else if (!allValid) {
+                    if (errorElement) {
+                        errorElement.textContent = 'Заполните все поля в строках образцов';
+                        errorElement.style.display = 'block';
+                    }
+                } else {
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+                
+                return allValid && hasAtLeastOneFilled;
+            }
+
+            /**
+             * Получение форматированных данных образцов
+             */
+            getFormattedObrazcy() {
+                const obrazcyRows = document.querySelectorAll('.obrazcy-row');
+                const kolichestva = [];
+                const metrazhi = [];
+                
+                obrazcyRows.forEach(row => {
+                    const kolichestvoInput = row.querySelector('.obrazcy-kolichestvo');
+                    const metrazhInput = row.querySelector('.obrazcy-metrazh');
+                    
+                    if (kolichestvoInput && metrazhInput) {
+                        const kolichestvoValue = String(kolichestvoInput.value).trim();
+                        const metrazhValue = String(metrazhInput.value).trim();
+                        
+                        // Добавляем только полностью заполненные строки
+                        if (kolichestvoValue !== '' && metrazhValue !== '') {
+                            kolichestva.push(kolichestvoValue);
+                            metrazhi.push(metrazhValue);
+                        }
+                    }
+                });
+                
+                if (kolichestva.length === 0) {
+                    return '';
+                }
+                
+                // Формируем строки как "количество x метраж"
+                const pairs = [];
+                for (let i = 0; i < kolichestva.length; i++) {
+                    pairs.push(`${kolichestva[i]} x ${metrazhi[i]}`);
+                }
+                
+                // Объединяем через точку с запятой
+                return pairs.join('; ');
             }
 
             // ============= НОВЫЕ МЕТОДЫ ДЛЯ ВАЛИДАЦИИ =============
@@ -1260,7 +1593,7 @@
                         this.validateWasteWeightAgainstLimit(weightInput);
                     }
                 } else {
-                    // Удаляем ограничение
+                    // Убираем ограничение
                     weightInput.removeAttribute('data-max-weight');
                     weightInput.removeAttribute('title');
                     weightInput.classList.remove('validation-error');
@@ -1407,12 +1740,33 @@
                 const vikLengthInput = document.getElementById('vikLength');
                 
                 if (vikLengthInput && harakteristikiValue) {
-                    // Ищем информацию о длине в характеристиках
-                    const lengthMatch = harakteristikiValue.match(/(\d+(?:[.,]\d+)?)\s*м/);
-                    if (lengthMatch && lengthMatch[1]) {
-                        const lengthValue = lengthMatch[1].replace(',', '.');
-                        vikLengthInput.value = lengthValue + ' м';
+                    // Очищаем значение от лишних символов
+                    const cleanedValue = harakteristikiValue.trim();
+                    
+                    // Удаляем все нецифровые символы кроме точки и запятой
+                    const numericString = cleanedValue.replace(/[^\d,.]/g, '');
+                    
+                    // Заменяем запятую на точку для корректного парсинга
+                    const normalizedString = numericString.replace(',', '.');
+                    
+                    // Пробуем извлечь число
+                    const numberMatch = normalizedString.match(/(\d+(?:\.\d+)?)/);
+                    
+                    if (numberMatch && numberMatch[1]) {
+                        const lengthValue = parseFloat(numberMatch[1]);
+                        if (!isNaN(lengthValue)) {
+                            vikLengthInput.value = lengthValue + ' м';
+                        } else {
+                            vikLengthInput.value = 'не указано';
+                        }
+                    } else if (cleanedValue) {
+                        // Если не удалось извлечь число, но значение есть, просто копируем его
+                        vikLengthInput.value = cleanedValue + ' м';
+                    } else {
+                        vikLengthInput.value = 'не указано';
                     }
+                } else if (vikLengthInput) {
+                    vikLengthInput.value = 'не указано';
                 }
             }
 
@@ -1552,9 +1906,27 @@
                             <thead>
                                 <tr>
                                     <th>Параметры</th>
-                                    <th class="time-slot-header">8:00</th>
-                                    <th class="time-slot-header">12:00</th>
-                                    <th class="time-slot-header">16:00</th>
+                                    <th class="time-slot-header">
+                                        8:00
+                                        <div class="skip-checkbox">
+                                            <input type="checkbox" id="skip-8am" class="skip-slot-checkbox" data-time="8:00">
+                                            <label for="skip-8am">Пропустить</label>
+                                        </div>
+                                    </th>
+                                    <th class="time-slot-header">
+                                        12:00
+                                        <div class="skip-checkbox">
+                                            <input type="checkbox" id="skip-12pm" class="skip-slot-checkbox" data-time="12:00">
+                                            <label for="skip-12pm">Пропустить</label>
+                                        </div>
+                                    </th>
+                                    <th class="time-slot-header">
+                                        16:00
+                                        <div class="skip-checkbox">
+                                            <input type="checkbox" id="skip-4pm" class="skip-slot-checkbox" data-time="16:00">
+                                            <label for="skip-4pm">Пропустить</label>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="vikMeasurementsBody">
@@ -1679,6 +2051,9 @@
                 // Создаем таблицу измерений
                 this.createVikMeasurementsTable();
                 
+                // Настраиваем чекбоксы пропуска слотов
+                this.setupSkipCheckboxes();
+                
                 // Проверяем прогресс заполнения
                 await this.vikCheckProgress();
             }
@@ -1794,6 +2169,113 @@
                 }
                 
                 tableBody.appendChild(submitRow);
+            }
+
+            setupSkipCheckboxes() {
+                const skipCheckboxes = document.querySelectorAll('.skip-slot-checkbox');
+                skipCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        this.handleSkipSlotChange(e.target);
+                    });
+                });
+            }
+
+            handleSkipSlotChange(checkbox) {
+                const timeSlot = checkbox.dataset.time;
+                const isSkipped = checkbox.checked;
+                
+                // Обновляем визуальный стиль заголовка
+                const header = checkbox.closest('.time-slot-header');
+                if (header) {
+                    if (isSkipped) {
+                        header.classList.add('skipped');
+                    } else {
+                        header.classList.remove('skipped');
+                    }
+                }
+                
+                // Управляем доступностью полей
+                if (isSkipped) {
+                    // Помечаем слот как "пропущенный"
+                    this.markSlotAsSkipped(timeSlot);
+                } else {
+                    // Возвращаем нормальное состояние
+                    this.unmarkSlotAsSkipped(timeSlot);
+                }
+                
+                // Пересчитываем доступность слотов
+                this.updateTimeSlotsAvailabilityWithSkips();
+            }
+
+            markSlotAsSkipped(timeSlot) {
+                const suffix = timeSlot === '8:00' ? '-1' : timeSlot === '12:00' ? '-2' : '-3';
+                
+                // Блокируем все поля в этом слоте
+                const measurementInputs = document.querySelectorAll(`#vikFormContainer [data-time="${timeSlot}"]`);
+                measurementInputs.forEach(input => {
+                    if (input.tagName === 'INPUT' || input.tagName === 'SELECT') {
+                        input.disabled = true;
+                        input.value = ''; // Очищаем значения
+                        input.classList.add('disabled-field');
+                        input.placeholder = 'Пропущено';
+                    }
+                });
+                
+                // Блокируем кнопку отправки
+                const submitBtn = document.getElementById(`vikSubmitBtn${suffix}`);
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = `⏭️ Пропущено ${timeSlot}`;
+                    submitBtn.classList.add('disabled-field');
+                }
+                
+                // Добавляем в множество пропущенных слотов
+                this.skippedSlots.add(timeSlot);
+            }
+
+            unmarkSlotAsSkipped(timeSlot) {
+                const suffix = timeSlot === '8:00' ? '1' : timeSlot === '12:00' ? '2' : '3';
+                
+                // Убираем из пропущенных
+                this.skippedSlots.delete(timeSlot);
+                
+                // Восстанавливаем нормальную логику доступности
+                if (this.vikIsTimeSlotEnabled(timeSlot)) {
+                    this.vikEnableTimeSlot(timeSlot);
+                } else {
+                    this.vikDisableTimeSlot(timeSlot);
+                }
+            }
+
+            updateTimeSlotsAvailabilityWithSkips() {
+                const timeSlots = ['8:00', '12:00', '16:00'];
+                
+                timeSlots.forEach(slot => {
+                    if (this.skippedSlots.has(slot)) {
+                        // Слот пропущен - блокируем
+                        this.markSlotAsSkipped(slot);
+                    } else if (this.submittedSlots.has(slot)) {
+                        // Слот заполнен - блокируем
+                        this.vikLockTimeSlot(slot);
+                    } else if (this.vikIsTimeSlotEnabled(slot)) {
+                        // Слот доступен для заполнения
+                        this.vikEnableTimeSlot(slot);
+                    } else {
+                        // Слот недоступен
+                        this.vikDisableTimeSlot(slot);
+                    }
+                });
+                
+                // Обновляем информационное сообщение
+                this.updateSkipInfoMessage();
+            }
+
+            updateSkipInfoMessage() {
+                const skippedCount = this.skippedSlots.size;
+                if (skippedCount > 0) {
+                    const skippedList = Array.from(this.skippedSlots).join(', ');
+                    this.vikShowInfo(`Пропущенные замеры: ${skippedList}. Заполняйте следующие доступные слоты.`);
+                }
             }
 
             setupVikEventHandlers() {
@@ -2029,6 +2511,42 @@
                 this.vikShowInfo('Заполните данные для замера 8:00. После отправки станет доступен замер 12:00.');
             }
 
+            vikIsTimeSlotEnabled(timeSlot) {
+                // Если слот пропущен - он недоступен
+                if (this.skippedSlots.has(timeSlot)) {
+                    return false;
+                }
+                
+                // Проверяем, заполнен ли уже этот слот
+                if (this.submittedSlots.has(timeSlot)) {
+                    return false;
+                }
+                
+                // Новая логика с учетом пропусков
+                if (timeSlot === '8:00') {
+                    return true; // 8:00 всегда доступен, если не пропущен
+                }
+                
+                if (timeSlot === '12:00') {
+                    // 12:00 доступен если:
+                    // 1. 8:00 отправлен ИЛИ
+                    // 2. 8:00 пропущен
+                    return this.submittedSlots.has('8:00') || this.skippedSlots.has('8:00');
+                }
+                
+                if (timeSlot === '16:00') {
+                    // 16:00 доступен если:
+                    // 1. 12:00 отправлен И предыдущий (8:00) либо отправлен, либо пропущен
+                    // 2. ИЛИ 12:00 пропущен И предыдущий (8:00) либо отправлен, либо пропущен
+                    const prevSlotAvailable = this.submittedSlots.has('12:00') || this.skippedSlots.has('12:00');
+                    const firstSlotHandled = this.submittedSlots.has('8:00') || this.skippedSlots.has('8:00');
+                    
+                    return prevSlotAvailable && firstSlotHandled;
+                }
+                
+                return false;
+            }
+
             vikEnableTimeSlot(timeSlot) {
                 const suffix = timeSlot === '8:00' ? '1' : timeSlot === '12:00' ? '2' : '3';
                 
@@ -2050,6 +2568,7 @@
                     if (input.tagName === 'INPUT' || input.tagName === 'SELECT') {
                         input.disabled = false;
                         input.classList.remove('disabled-field', 'locked-field');
+                        input.placeholder = input.dataset.originalPlaceholder || '';
                     }
                 });
                 
@@ -2203,30 +2722,6 @@
                 }
             }
 
-            vikIsTimeSlotEnabled(timeSlot) {
-                // Проверяем, заполнен ли уже слот
-                if (this.submittedSlots.has(timeSlot)) {
-                    return false;
-                }
-                
-                // 8:00 всегда доступен, если не отправлен
-                if (timeSlot === '8:00') {
-                    return true;
-                }
-                
-                // 12:00 доступен, если отправлен 8:00
-                if (timeSlot === '12:00') {
-                    return this.submittedSlots.has('8:00');
-                }
-                
-                // 16:00 доступен, если отправлен 12:00
-                if (timeSlot === '16:00') {
-                    return this.submittedSlots.has('12:00');
-                }
-                
-                return false;
-            }
-
             async vikCheckProgress() {
                 // Для проверки прогресса используем данные из основной формы
                 const date = document.getElementById('dateSelect').value;
@@ -2268,7 +2763,7 @@
                             this.vikFillSlotData();
                             
                             // Обновляем доступность слотов
-                            this.vikUpdateTimeSlotsAvailability();
+                            this.updateTimeSlotsAvailabilityWithSkips();
                             
                             if (this.submittedSlots.size > 0) {
                                 this.vikShowSuccess(`Найдено ${this.submittedSlots.size} заполненный(ых) слот(ов)`);
@@ -2291,16 +2786,17 @@
                 
                 const totalSlots = 3;
                 const filledSlots = this.submittedSlots.size;
+                const skippedSlots = this.skippedSlots.size;
                 
                 let statusText = '';
                 
-                if (filledSlots === 0) {
+                if (filledSlots === 0 && skippedSlots === 0) {
                     statusText = 'Нет заполненных слотов. Начинайте с 8:00.';
-                } else if (filledSlots === totalSlots) {
-                    statusText = 'Все слоты заполнены!';
+                } else if (filledSlots + skippedSlots === totalSlots) {
+                    statusText = 'Все слоты заполнены или пропущены!';
                 } else {
                     const currentSlot = this.vikGetNextSlot();
-                    statusText = `Заполнено ${filledSlots} из ${totalSlots} слотов. Текущий слот: ${currentSlot}`;
+                    statusText = `Заполнено ${filledSlots}, пропущено ${skippedSlots} из ${totalSlots} слотов. Текущий слот: ${currentSlot}`;
                 }
                 
                 progressStatus.textContent = statusText;
@@ -2310,12 +2806,12 @@
                 const slots = ['8:00', '12:00', '16:00'];
                 
                 for (let slot of slots) {
-                    if (!this.submittedSlots.has(slot)) {
+                    if (!this.submittedSlots.has(slot) && !this.skippedSlots.has(slot)) {
                         return slot;
                     }
                 }
                 
-                return 'все заполнены';
+                return 'все заполнены или пропущены';
             }
 
             vikFillSlotData() {
@@ -2384,32 +2880,6 @@
                     // Блокируем слот после заполнения
                     this.vikLockTimeSlot(slot);
                 });
-            }
-
-            vikUpdateTimeSlotsAvailability() {
-                // Обрабатываем каждый слот
-                const timeSlots = ['8:00', '12:00', '16:00'];
-                
-                timeSlots.forEach(slot => {
-                    if (this.submittedSlots.has(slot)) {
-                        // Слот заполнен - блокируем
-                        this.vikLockTimeSlot(slot);
-                    } else if (this.vikIsTimeSlotEnabled(slot)) {
-                        // Слот доступен для заполнения
-                        this.vikEnableTimeSlot(slot);
-                    } else {
-                        // Слот недоступен
-                        this.vikDisableTimeSlot(slot);
-                    }
-                });
-                
-                // Обновляем информационное сообщение
-                const nextSlot = this.vikGetNextSlot();
-                if (nextSlot !== 'все заполнены') {
-                    this.vikShowInfo(`Заполните данные для замера ${nextSlot}.`);
-                } else {
-                    this.vikShowSuccess('Все замеры за смену успешно отправлены!');
-                }
             }
 
             async vikLoadNormsForDiameterSDR() {
@@ -2821,7 +3291,7 @@
                     await this.vikCheckProgress();
                     
                     // Обновляем доступность слотов
-                    this.vikUpdateTimeSlotsAvailability();
+                    this.updateTimeSlotsAvailabilityWithSkips();
                     
                     this.vikClearValidationErrors();
                 } else {
@@ -2881,6 +3351,7 @@
                     sdr: getValue('vikSdrInput'),
                     length: getValue('vikLength'),
                     timeSlot: timeSlot,
+                    isSkipped: this.skippedSlots.has(timeSlot),
                     pipeNumber: getValue('pipe-number' + suffix),
                     diameterMeasured: getValue('diameter' + suffix),
                     oval: getValue('oval' + suffix),
@@ -2947,6 +3418,7 @@
             vikResetFormState() {
                 this.submittedSlots = new Set();
                 this.slotData = {};
+                this.skippedSlots = new Set();
                 const progressIndicator = document.getElementById('vikProgressIndicator');
                 if (progressIndicator) progressIndicator.style.display = 'none';
                 this.vikInitializeMeasurementState();
@@ -3161,6 +3633,31 @@
                 };
             }
 
+            // =============== НОВЫЙ МЕТОД: РАСЧЕТ ОБЩЕГО ВЕСА ОТХОДОВ ===============
+            calculateTotalWasteWeight() {
+                const wasteRows = document.querySelectorAll('.waste-types-container');
+                let totalWeight = 0;
+                
+                for (let i = 0; i < wasteRows.length; i++) {
+                    const weightInput = wasteRows[i].querySelector('.vesOthodovInline');
+                    if (weightInput && weightInput.value) {
+                        const weight = parseFloat(weightInput.value) || 0;
+                        totalWeight += weight;
+                    }
+                }
+                
+                return totalWeight;
+            }
+
+            // =============== НОВЫЙ МЕТОД: ОБНОВЛЕНИЕ ОТОБРАЖЕНИЯ ОБЩЕГО ВЕСА ===============
+            updateTotalWasteWeightDisplay() {
+                const totalWeight = this.calculateTotalWasteWeight();
+                const displayField = document.getElementById('totalWasteWeight');
+                if (displayField) {
+                    displayField.value = totalWeight.toFixed(2);
+                }
+            }
+
             getFormattedWasteData() {
                 const wasteRows = document.querySelectorAll('.waste-types-container');
                 const wasteTypes = [];
@@ -3172,7 +3669,8 @@
                     const reasonSelect = wasteRows[i].querySelector('.prichinaOthodovSelect');
                     const weightInput = wasteRows[i].querySelector('.vesOthodovInline');
                     
-                    if (typeSelect.value && reasonSelect.value && weightInput && weightInput.value) {
+                    // ТОЧНО КАК В ПРОСТОЕ: если все три поля заполнены
+                    if (typeSelect.value && reasonSelect.value && weightInput.value) {
                         wasteTypes.push(typeSelect.value);
                         wasteReasons.push(reasonSelect.value);
                         wasteWeights.push(parseFloat(weightInput.value) || 0);
@@ -3187,12 +3685,6 @@
                     wasteReasonsArray: wasteReasons,
                     wasteWeightsArray: wasteWeights
                 };
-            }
-
-            getFormattedObrazcy() {
-                const kolichestvo = document.getElementById('obrazcyKolichestvo').value || '0';
-                const metrazh = document.getElementById('obrazcyMetrazh').value || '0';
-                return `${kolichestvo} x ${metrazh}`;
             }
 
             addWasteRow() {
@@ -3233,13 +3725,17 @@
                 
                 const weightInput = newRow.querySelector('.vesOthodovInline');
                 weightInput.addEventListener('blur', () => this.validateInlineWasteField(weightInput));
-                weightInput.addEventListener('input', () => this.clearInlineWasteError(weightInput));
+                weightInput.addEventListener('input', () => {
+                    this.clearInlineWasteError(weightInput);
+                    this.updateTotalWasteWeightDisplay(); // Добавлен вызов обновления общего веса
+                });
                 
                 // Добавлено: Валидация для нового поля веса
                 weightInput.addEventListener('input', () => this.validateWasteWeightAgainstLimit(weightInput));
                 
                 newRow.querySelector('.remove-waste-btn-inline').addEventListener('click', function() {
                     wasteContainer.removeChild(newRow);
+                    window._combinedForm.updateTotalWasteWeightDisplay(); // Обновляем при удалении строки
                 });
             }
 
@@ -3310,50 +3806,29 @@
                     field.addEventListener('input', () => this.clearFieldError(fieldId));
                 });
                 
-                // Валидация для образцов
-                const obrazcyKolichestvo = document.getElementById('obrazcyKolichestvo');
-                const obrazcyMetrazh = document.getElementById('obrazcyMetrazh');
-                const obrazcyError = document.getElementById('obrazcyError');
-                
-                if (obrazcyKolichestvo) {
-                    obrazcyKolichestvo.addEventListener('blur', () => this.validateObrazcy());
-                    obrazcyKolichestvo.addEventListener('input', () => {
-                        obrazcyKolichestvo.classList.remove('validation-error');
-                        if (obrazcyError) obrazcyError.style.display = 'none';
-                    });
-                }
-                
-                if (obrazcyMetrazh) {
-                    obrazcyMetrazh.addEventListener('blur', () => this.validateObrazcy());
-                    obrazcyMetrazh.addEventListener('input', () => {
-                        obrazcyMetrazh.classList.remove('validation-error');
-                        if (obrazcyError) obrazcyError.style.display = 'none';
-                    });
-                }
-            }
-
-            validateObrazcy() {
-                const kolichestvo = document.getElementById('obrazcyKolichestvo');
-                const metrazh = document.getElementById('obrazcyMetrazh');
-                const errorElement = document.getElementById('obrazcyError');
-                
-                if (!kolichestvo || !metrazh) return true;
-                
-                const kolichestvoValue = String(kolichestvo.value).trim();
-                const metrazhValue = String(metrazh.value).trim();
-                
-                if (kolichestvoValue === '' || metrazhValue === '') {
-                    kolichestvo.classList.add('validation-error');
-                    metrazh.classList.add('validation-error');
-                    if (errorElement) errorElement.style.display = 'block';
-                    return false;
-                } else {
-                    kolichestvo.classList.remove('validation-error');
-                    metrazh.classList.remove('validation-error');
-                    kolichestvo.classList.add('validation-success');
-                    metrazh.classList.add('validation-success');
-                    if (errorElement) errorElement.style.display = 'none';
-                    return true;
+                // Валидация для образцов (добавляем обработчики для первой строки)
+                const firstObrazcyRow = document.querySelector('.obrazcy-row');
+                if (firstObrazcyRow) {
+                    const kolichestvoInput = firstObrazcyRow.querySelector('.obrazcy-kolichestvo');
+                    const metrazhInput = firstObrazcyRow.querySelector('.obrazcy-metrazh');
+                    
+                    if (kolichestvoInput) {
+                        kolichestvoInput.addEventListener('blur', () => this.validateObrazcyRow(firstObrazcyRow));
+                        kolichestvoInput.addEventListener('input', () => {
+                            kolichestvoInput.classList.remove('validation-error');
+                            const errorElement = document.getElementById('obrazcyError');
+                            if (errorElement) errorElement.style.display = 'none';
+                        });
+                    }
+                    
+                    if (metrazhInput) {
+                        metrazhInput.addEventListener('blur', () => this.validateObrazcyRow(firstObrazcyRow));
+                        metrazhInput.addEventListener('input', () => {
+                            metrazhInput.classList.remove('validation-error');
+                            const errorElement = document.getElementById('obrazcyError');
+                            if (errorElement) errorElement.style.display = 'none';
+                        });
+                    }
                 }
             }
 
@@ -3403,7 +3878,7 @@
                 fields.forEach(f => { if (!this.validateField(f)) isValid = false; });
                 
                 // Проверяем образцы
-                if (!this.validateObrazcy()) {
+                if (!this.validateAllObrazcy()) {
                     isValid = false;
                 }
                 
@@ -3414,10 +3889,9 @@
                     document.getElementById('wasteError').style.display = 'block';
                     return false;
                 }
-                
-                let hasWasteData = false;
-                let allWasteFieldsValid = true;
-                
+
+                let hasValidWasteRow = false;
+
                 for (let i = 0; i < wasteRows.length; i++) {
                     const typeSelect = wasteRows[i].querySelector('.vidyOthodovSelect');
                     const reasonSelect = wasteRows[i].querySelector('.prichinaOthodovSelect');
@@ -3425,48 +3899,34 @@
                     
                     if (typeSelect && reasonSelect && weightInput) {
                         const typeValid = typeSelect.value !== '';
-                        const reasonValid = reasonSelect.value !== '' && reasonSelect.value !== '---------';
+                        const reasonValid = reasonSelect.value !== '';
                         const weightValid = weightInput.value !== '' && parseFloat(weightInput.value) >= 0;
                         
-                        if (!typeValid) {
-                            typeSelect.classList.add('validation-error');
-                            allWasteFieldsValid = false;
-                        } else {
-                            typeSelect.classList.remove('validation-error');
-                        }
-                        
-                        if (!reasonValid) {
-                            reasonSelect.classList.add('validation-error');
-                            allWasteFieldsValid = false;
-                        } else {
-                            reasonSelect.classList.remove('validation-error');
-                        }
-                        
-                        if (!weightValid) {
-                            weightInput.classList.add('validation-error');
-                            allWasteFieldsValid = false;
-                        } else {
-                            weightInput.classList.remove('validation-error');
-                        }
-                        
+                        // Если строка полностью заполнена - это валидно
                         if (typeValid && reasonValid && weightValid) {
-                            hasWasteData = true;
+                            hasValidWasteRow = true;
+                            typeSelect.classList.remove('validation-error');
+                            reasonSelect.classList.remove('validation-error');
+                            weightInput.classList.remove('validation-error');
+                        } 
+                        // Если строка частично заполнена - это ошибка
+                        else if (typeValid || reasonValid || weightInput.value) {
+                            if (!typeValid) typeSelect.classList.add('validation-error');
+                            if (!reasonValid) reasonSelect.classList.add('validation-error');
+                            if (!weightValid) weightInput.classList.add('validation-error');
+                            this.showMessage(`Строка отходов ${i+1} заполнена не полностью. Заполните все поля или удалите строку.`, 'error');
+                            return false;
                         }
+                        // Если строка полностью пустая - игнорируем
                     }
                 }
-                
-                if (!allWasteFieldsValid) {
-                    this.showMessage('Заполните все поля в строках отходов', 'error');
-                    document.getElementById('wasteError').style.display = 'block';
-                    return false;
-                }
-                
-                if (!hasWasteData) {
+
+                if (!hasValidWasteRow) {
                     this.showMessage('Заполните хотя бы одну строку отходов полностью', 'error');
                     document.getElementById('wasteError').style.display = 'block';
                     return false;
                 }
-                
+
                 document.getElementById('wasteError').style.display = 'none';
                 
                 // Проверяем простой
@@ -3700,15 +4160,123 @@
                 document.getElementById('vesGP').value = emp['Вес ГП'] || '';
                 document.getElementById('vvodRegranulata').value = emp['Ввод регранулята КГ.'] || '';
 
-                // Заполняем поля образцов
+                // Очищаем контейнер образцов
+                const obrazcyContainer = document.getElementById('obrazcy-container');
+                obrazcyContainer.innerHTML = '';
+                
+                // Заполняем данные образцов из сохраненной записи
                 if (emp['Образцы_новые']) {
-                    const obrazcyParts = emp['Образцы_новые'].split(' x ');
-                    if (obrazcyParts.length === 2) {
-                        document.getElementById('obrazcyKolichestvo').value = obrazcyParts[0].trim();
-                        document.getElementById('obrazcyMetrazh').value = obrazcyParts[1].trim();
+                    const obrazcyPairs = emp['Образцы_новые'].split(';').map(pair => pair.trim());
+                    
+                    for (let i = 0; i < obrazcyPairs.length; i++) {
+                        if (obrazcyPairs[i]) {
+                            const obrazcyParts = obrazcyPairs[i].split(' x ');
+                            if (obrazcyParts.length === 2) {
+                                const newRow = document.createElement('div');
+                                newRow.className = 'obrazcy-row';
+                                
+                                if (i === 0) {
+                                    newRow.innerHTML = `
+                                        <div class="obrazcy-input-wrapper">
+                                            <label>Количество</label>
+                                            <input type="number" class="obrazcy-kolichestvo" placeholder="Количество" min="0" required>
+                                        </div>
+                                        <div class="obrazcy-separator">x</div>
+                                        <div class="obrazcy-input-wrapper">
+                                            <label>Метраж</label>
+                                            <input type="number" class="obrazcy-metrazh" step="0.01" placeholder="Метраж" min="0" required>
+                                        </div>
+                                        <div class="add-obrazcy-btn" id="add-obrazcy-btn">+</div>
+                                    `;
+                                } else {
+                                    newRow.innerHTML = `
+                                        <div class="obrazcy-input-wrapper">
+                                            <label>Количество</label>
+                                            <input type="number" class="obrazcy-kolichestvo" placeholder="Количество" min="0" required>
+                                        </div>
+                                        <div class="obrazcy-separator">x</div>
+                                        <div class="obrazcy-input-wrapper">
+                                            <label>Метраж</label>
+                                            <input type="number" class="obrazcy-metrazh" step="0.01" placeholder="Метраж" min="0" required>
+                                        </div>
+                                        <button type="button" class="remove-obrazcy-btn">×</button>
+                                    `;
+                                }
+                                
+                                obrazcyContainer.appendChild(newRow);
+                                
+                                const kolichestvoInput = newRow.querySelector('.obrazcy-kolichestvo');
+                                const metrazhInput = newRow.querySelector('.obrazcy-metrazh');
+                                
+                                kolichestvoInput.value = obrazcyParts[0].trim();
+                                metrazhInput.value = obrazcyParts[1].trim();
+                                
+                                // Добавляем обработчики для полей
+                                kolichestvoInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                                kolichestvoInput.addEventListener('input', () => {
+                                    kolichestvoInput.classList.remove('validation-error');
+                                    const errorElement = document.getElementById('obrazcyError');
+                                    if (errorElement) errorElement.style.display = 'none';
+                                });
+                                
+                                metrazhInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                                metrazhInput.addEventListener('input', () => {
+                                    metrazhInput.classList.remove('validation-error');
+                                    const errorElement = document.getElementById('obrazcyError');
+                                    if (errorElement) errorElement.style.display = 'none';
+                                });
+                                
+                                if (i > 0) {
+                                    newRow.querySelector('.remove-obrazcy-btn').addEventListener('click', function() {
+                                        obrazcyContainer.removeChild(newRow);
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
+                
+                // Если нет данных, добавляем первую строку
+                if (obrazcyContainer.children.length === 0) {
+                    const newRow = document.createElement('div');
+                    newRow.className = 'obrazcy-row';
+                    newRow.innerHTML = `
+                        <div class="obrazcy-input-wrapper">
+                            <label>Количество</label>
+                            <input type="number" class="obrazcy-kolichestvo" placeholder="Количество" min="0" required>
+                        </div>
+                        <div class="obrazcy-separator">x</div>
+                        <div class="obrazcy-input-wrapper">
+                            <label>Метраж</label>
+                            <input type="number" class="obrazcy-metrazh" step="0.01" placeholder="Метраж" min="0" required>
+                        </div>
+                        <div class="add-obrazcy-btn" id="add-obrazcy-btn">+</div>
+                    `;
+                    obrazcyContainer.appendChild(newRow);
+                    
+                    const kolichestvoInput = newRow.querySelector('.obrazcy-kolichestvo');
+                    const metrazhInput = newRow.querySelector('.obrazcy-metrazh');
+                    
+                    kolichestvoInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                    kolichestvoInput.addEventListener('input', () => {
+                        kolichestvoInput.classList.remove('validation-error');
+                        const errorElement = document.getElementById('obrazcyError');
+                        if (errorElement) errorElement.style.display = 'none';
+                    });
+                    
+                    metrazhInput.addEventListener('blur', () => this.validateObrazcyRow(newRow));
+                    metrazhInput.addEventListener('input', () => {
+                        metrazhInput.classList.remove('validation-error');
+                        const errorElement = document.getElementById('obrazcyError');
+                        if (errorElement) errorElement.style.display = 'none';
+                    });
+                }
 
+                const addObrazcyBtn = document.getElementById('add-obrazcy-btn');
+                if (addObrazcyBtn) {
+                    addObrazcyBtn.addEventListener('click', () => this.addObrazcyRow());
+                }
+                
                 // Очищаем контейнер видов, причин и веса отходов
                 const wasteContainer = document.getElementById('waste-container');
                 wasteContainer.innerHTML = '';
@@ -3787,15 +4355,21 @@
                             
                             weightInput.value = weights[i] || '';
                             
+                            // Добавляем обработчики для обновления общего веса
+                            weightInput.addEventListener('input', () => {
+                                this.clearInlineWasteError(weightInput);
+                                this.updateTotalWasteWeightDisplay();
+                            });
+                            
                             if (i > 0) {
                                 newRow.querySelector('.remove-waste-btn-inline').addEventListener('click', function() {
                                     wasteContainer.removeChild(newRow);
+                                    window._combinedForm.updateTotalWasteWeightDisplay();
                                 });
                             }
                             
                             typeSelect.addEventListener('change', (e) => this.handleWasteTypeChange(e.target));
                             weightInput.addEventListener('blur', () => this.validateInlineWasteField(weightInput));
-                            weightInput.addEventListener('input', () => this.clearInlineWasteError(weightInput));
                             // Добавлено: Валидация для загруженного поля веса
                             weightInput.addEventListener('input', () => this.validateWasteWeightAgainstLimit(weightInput));
                         }
@@ -3838,7 +4412,10 @@
                     
                     const weightInput = newRow.querySelector('.vesOthodovInline');
                     weightInput.addEventListener('blur', () => this.validateInlineWasteField(weightInput));
-                    weightInput.addEventListener('input', () => this.clearInlineWasteError(weightInput));
+                    weightInput.addEventListener('input', () => {
+                        this.clearInlineWasteError(weightInput);
+                        this.updateTotalWasteWeightDisplay(); // Добавлен вызов обновления общего веса
+                    });
                     // Добавлено: Валидация для нового поля веса
                     weightInput.addEventListener('input', () => this.validateWasteWeightAgainstLimit(weightInput));
                 }
@@ -3921,6 +4498,9 @@
                 this.showEmployeeInput();
                 this.clearAllValidationErrors();
                 
+                // Обновляем отображение общего веса после загрузки данных
+                this.updateTotalWasteWeightDisplay();
+                
                 const employeeName = emp['ФИО машиниста'] || emp['ФИО машиниста 2'] || 'Неизвестный сотрудник';
                 this.showMessage(`Загружены данные для: ${employeeName}`, 'success');
                 
@@ -3966,9 +4546,7 @@
                     'nomerOtrezka', 
                     'kolichestvoGP', 
                     'vesGP', 
-                    'vvodRegranulata',
-                    'obrazcyKolichestvo',
-                    'obrazcyMetrazh'
+                    'vvodRegranulata'
                 ];
                 
                 fields.forEach(id => {
@@ -3979,6 +4557,13 @@
                     }
                     const err = document.getElementById(id + 'Error');
                     if (err) err.style.display = 'none';
+                });
+                
+                // Очищаем ошибки в строках образцов
+                const obrazcyInputs = document.querySelectorAll('.obrazcy-kolichestvo, .obrazcy-metrazh');
+                obrazcyInputs.forEach(input => {
+                    input.classList.remove('validation-error');
+                    input.classList.remove('validation-success');
                 });
                 
                 // Очищаем ошибки в строках отходов
@@ -3993,6 +4578,7 @@
                     select.classList.remove('validation-error');
                 });
                 
+                document.getElementById('obrazcyError').style.display = 'none';
                 document.getElementById('wasteError').style.display = 'none';
                 
                 // Очищаем сообщение о производительности
@@ -4088,6 +4674,9 @@
                 const downtimeData = this.getFormattedDowntime();
                 const wasteData = this.getFormattedWasteData();
                 const obrazcyData = this.getFormattedObrazcy();
+                
+                // РАСЧЕТ ОБЩЕГО ВЕСА ОТХОДОВ
+                const totalWasteWeight = this.calculateTotalWasteWeight();
 
                 const submitData = {
                     recordId: recordId,
@@ -4104,8 +4693,12 @@
                     prichinaOthodov: wasteData.wasteReasons,
                     prichinaProstoya: downtimeData.reasons,
                     vremyaProstoya: downtimeData.times,
-                    "Общее время простоя": downtimeData.totalTimeFormatted
+                    "Общее время простоя": downtimeData.totalTimeFormatted,
+                    // ДОБАВЛЯЕМ ОБЩИЙ ВЕС
+                    "Общий вес": totalWasteWeight
                 };
+
+                console.log('Отправляемые данные с общим весом:', submitData);
 
                 const submitBtn = document.getElementById('submitBtn');
                 submitBtn.disabled = true;
@@ -4144,6 +4737,8 @@
                             this.allData[idx]["Причина простоя"] = submitData.prichinaProstoya;
                             this.allData[idx]["Время простоя"] = submitData.vremyaProstoya;
                             this.allData[idx]["Общее время простоя"] = submitData["Общее время простоя"];
+                            // ДОБАВЛЯЕМ ОБЩИЙ ВЕС В ЛОКАЛЬНЫЕ ДАННЫЕ
+                            this.allData[idx]["Общий вес"] = submitData["Общий вес"];
                         }
                     }
                 } catch (e) {
